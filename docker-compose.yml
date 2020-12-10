@@ -1,0 +1,38 @@
+version: '3'
+services:
+  db:
+    container_name: db
+    image: mysql:5.7
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      - MYSQL_PORT=3306  # cannot change this port to other number
+      - MYSQL_DATABASE=twitter
+      - MYSQL_USER=twitterapi
+      - MYSQL_PASSWORD=rootpass
+      - MYSQL_ROOT_PASSWORD=123456_abc
+    volumes:
+      - ./data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - net
+  web:
+    build: .
+    command: bash -c "python3 manage.py migrate && python3 manage.py runserver 0.0.0.0:6001"
+    volumes:
+      - .:/djcode
+    environment:
+          DB_NAME: 'twitter'
+          DB_HOST: 'db'
+          DB_PASSWORD: 'rootpass'
+          DB_USER: 'twitterapi'
+          DB_PORT: '3306'
+    ports:
+      - "6001:6001"
+    depends_on:
+      - db
+    networks:
+      - net
+networks:
+  net:
