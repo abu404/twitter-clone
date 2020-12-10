@@ -12,21 +12,36 @@ docker-compose up --build -d
 >Step 3: Wait till both MySQL and Django app is up
 
 
-##### Sometimes the mysql can take sometime to launch. Since the app runs in parallel with db,
+Sometimes the mysql can take sometime to launch. Since the app runs in parallel with db,
 the app could crash till the db is up. This is intentional, please give 5 min to the services to up. 
-####
 <br>
+ If you are still facing problem then you may need to create the database
+ 
+ For fixing it please run the following command
+ ```
+docker ps
+find the mysql container_id
+```
+```
+docker exec -it <container_id> /bin/bash
+bash
+```
+```
+mysql -utwitterapi -prootpass -hdb
+create database twitter
+
+```
 
 >Step 4: Navigate to the following URL
 ```
 http://localhost:6001/
 ```
 
-#####The above url hosts the swagger ui. 
+The above url hosts the swagger ui. 
 
 
-##API'S
-##### There are two sets of APIs. One for authentication and other is the twiiter APIs
+API'S
+There are two sets of APIs. One for authentication and other is the twiiter APIs
 
 >Login
 
@@ -53,9 +68,9 @@ Sample Request Body
     "username": "abutahir"
 }
 ```
->######Note : Login endpoint returns a access token which has to be set while making calls to twitter api.
+>Note : Login endpoint returns a access token which has to be set while making calls to twitter api.
 
->##Create a Tweet
+>Create a Tweet
 ```
 POST
 /v1/twitter/tweet
@@ -65,9 +80,9 @@ Sample Request Body
   "is_retweet": true
 }
 ```
-* #####The tweet gets added mapped to authenticated user.
+* The tweet gets added mapped to authenticated user.
 
->##Like a Tweet
+>Like a Tweet
 * The url takes the tweet id in the url and takes user_id in request body
 * The user can be any valid user
 ```
@@ -77,7 +92,7 @@ PUT
     "user_id" : 0
 }
 ```
->##Unlike a Tweet
+>Unlike a Tweet
 * The url takes the tweet id in the url and takes user_id in request body
 * The user can be any valid user
 ```
