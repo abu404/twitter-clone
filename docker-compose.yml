@@ -19,7 +19,9 @@ services:
       - net
   web:
     build: .
+    restart: always
     command: bash -c "python3 manage.py migrate && python3 manage.py runserver 0.0.0.0:6001"
+#    command: bash -c "sh entry.sh"
     volumes:
       - .:/djcode
     environment:
