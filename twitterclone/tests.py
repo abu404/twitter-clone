@@ -42,7 +42,7 @@ class TestViews(APITestCase):
         print("[*] Testing tweet list")
         url = reverse('tweet-list-create')
         response = self.client.get(url)
-        print("resp", response.json())
+        # print("resp", response.json())
         self.assertEqual(len(response.json()), 1)
 
     def test_tweet_like(self):
@@ -63,7 +63,7 @@ class TestViews(APITestCase):
         response = self.client.get(url)
         data = response.json()
         self.assertEqual(len(data), 1)
-        self.assertEqual(len(data[0]['likes']), 1)
+        self.assertEqual(len(data['liked_users']), 1)
 
     def test_tweet_unlike(self):
         print("[*] Testing unliking a tweet")
@@ -79,7 +79,7 @@ class TestViews(APITestCase):
             'user_id': self.newuser.id
         }
         response = self.client.post(reverse('follow'), data=data)
-        self.assertEqual(response.status_code, 201)
+        self.assertEqual(response.status_code, 200)
 
     def test_following_for_user(self):
         print("[*] Testing get user followers")
@@ -98,7 +98,7 @@ class TestViews(APITestCase):
             'user_id': self.newuser.id
         }
         response = self.client.post(reverse('unfollow'), data=data)
-        self.assertEqual(response.status_code, 201)
+        self.assertEqual(response.status_code, 200)
         response = self.client.get(reverse('user-following'))
         data = response.json()
         self.assertEqual(len(data[0]['following']), 0)
