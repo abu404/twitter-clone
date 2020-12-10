@@ -7,7 +7,7 @@ docker volume create
 ```
 >Step 2: Run the follwoing command to run the project
 ```
-docker-compose up --build
+docker-compose up --build -d
 ```
 >Step 3: Wait till both MySQL and Django app is up
 
