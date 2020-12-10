@@ -10,12 +10,20 @@ from .models import *
 
 class TweetSerializer(serializers.ModelSerializer):
     class Meta:
-        fields = ['id', 'content', 'is_retweet']
+        fields = ['id', 'content']
         model = Tweet
 
 
 class TweetLikeSerializer(serializers.ModelSerializer):
     user_id = serializers.IntegerField()
+
+    class Meta:
+        fields = ['user_id']
+        model = Tweet
+
+
+class TweetLikeResponseSerializer(serializers.ModelSerializer):
+    user_id = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), many=True)
 
     class Meta:
         fields = ['user_id']

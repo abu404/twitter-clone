@@ -12,7 +12,7 @@ docker-compose up --build -d
 >Step 3: Wait till both MySQL and Django app is up
 
 
-#####Sometimes the mysql can take sometime to launch. Since the app runs in parallel with db,
+##### Sometimes the mysql can take sometime to launch. Since the app runs in parallel with db,
 the app could crash till the db is up. This is intentional, please give 5 min to the services to up. 
 ####
 <br>
